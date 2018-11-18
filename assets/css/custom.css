@@ -1,0 +1,19 @@
+/* Write your custom CSS here */
+#myVideo {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			min-width: 100%; 
+			min-height: 100%;
+			z-index:-50;
+		}
+		.page-title{
+			color:white;
+		}
+
+.mn-inner {
+	background-image : url("../images/dashback.jpg");
+background-size: 100% auto;	
+height : 100%;
+
+}
