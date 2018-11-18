@@ -57,11 +57,9 @@
                             <li class="hide-on-small-and-down"><a href="javascript:void(0)" data-activates="dropdown1" class="dropdown-button dropdown-right show-on-large"><i class="material-icons">notifications_none</i>
 <?php 
 $eid=$_SESSION['mlogin'];
-$isread=0;
-$sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblleaves.PostingDate from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.IsRead=:isread and tblemployees.d_no=:dno";
+$sql="Select d_no from tblemployees where FirstName=:eid";
 $query = $dbh -> prepare($sql);
-$query->bindParam(':isread',$isread,PDO::PARAM_STR);
-$query->bindParam(':dno',$dno,PDO::PARAM_STR);
+$query->bindParam(':eid',$eid,PDO::PARAM_STR);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $cnt=1;
@@ -72,9 +70,11 @@ foreach($results as $result)
 $dno=$result->d_no;
 //echo intval($dno);
 }}
+$eid=$_SESSION['mlogin'];
 $isread=0;
-$sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblleaves.PostingDate from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.IsRead=:isread and tblemployees.d_no=:dno";
+$sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblleaves.PostingDate from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblemployees.FirstName!=:eid and tblleaves.IsRead=:isread and tblemployees.d_no=:dno";
 $query = $dbh -> prepare($sql);
+$query->bindParam(':eid',$eid,PDO::PARAM_STR);
 $query->bindParam(':isread',$isread,PDO::PARAM_STR);
 $query->bindParam(':dno',$dno,PDO::PARAM_STR);
 $query->execute();
@@ -91,9 +91,24 @@ $unreadcount=$query->rowCount();?>
                                 <ul>
                                     <li class="notification-drop-title">Notifications</li>
 <?php 
-$isread=0;
-$sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblleaves.PostingDate from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.IsRead=:isread and tblemployees.d_no=:dno";
+$eid=$_SESSION['mlogin'];
+$sql="Select d_no from tblemployees where FirstName=:eid";
 $query = $dbh -> prepare($sql);
+$query->bindParam(':eid',$eid,PDO::PARAM_STR);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{   
+$dno=$result->d_no;
+//echo intval($dno);
+}}
+$isread=0;
+$sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblleaves.PostingDate from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblemployees.FirstName!=:eid and tblleaves.IsRead=:isread and tblemployees.d_no=:dno";
+$query = $dbh -> prepare($sql);
+$query->bindParam(':eid',$eid,PDO::PARAM_STR);
 $query->bindParam(':isread',$isread,PDO::PARAM_STR);
 $query->bindParam(':dno',$dno,PDO::PARAM_STR);
 $query->execute();
