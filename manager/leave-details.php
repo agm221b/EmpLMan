@@ -169,7 +169,7 @@ foreach($results as $result)
                                              <td style="font-size:16px;"><b>Leave Type :</b></td>
                                             <td><?php echo htmlentities($result->LeaveType);?></td>
                                              <td style="font-size:16px;"><b>Leave Date . :</b></td>
-                                            <td>From <?php echo htmlentities($result->FromDate);?> to <?php echo htmlentities($result->ToDate);?></td>
+                                            <td>From <?php echo htmlentities($result->ToDate);?> to <?php echo htmlentities($result->FromDate);?></td>
                                             <td style="font-size:16px;"><b>Posting Date</b></td>
                                            <td><?php echo htmlentities($result->PostingDate);?></td>
  </tr>
