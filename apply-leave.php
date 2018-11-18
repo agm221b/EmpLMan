@@ -32,6 +32,44 @@ $description=$_POST['description'];
 $days=$_POST['days']; 
 $status=0;
 $isread=0;
+if($leavetype='Child Care Leave')
+{
+if($days>'180')
+{
+$error=" No. of days should be lesser than or equal to 180 ";
+}
+else{
+$sql="INSERT INTO tblleaves(LeaveType,ToDate,FromDate,Description,Status,IsRead,empid,days) VALUES(:leavetype,:fromdate,:todate,:description,:status,:isread,:empid,:days)";
+$query = $dbh->prepare($sql);
+$query->bindParam(':leavetype',$leavetype,PDO::PARAM_STR);
+$query->bindParam(':fromdate',$fromdate,PDO::PARAM_STR);
+$query->bindParam(':todate',$todate,PDO::PARAM_STR);
+$query->bindParam(':description',$description,PDO::PARAM_STR);
+$query->bindParam(':status',$status,PDO::PARAM_STR);
+$query->bindParam(':isread',$isread,PDO::PARAM_STR);
+$query->bindParam(':empid',$empid,PDO::PARAM_STR);
+$query->bindParam(':days',$days,PDO::PARAM_STR);
+$query->execute();
+$lastInsertId = $dbh->lastInsertId();
+if($lastInsertId)
+{
+$sql="update tblemployees set available=:avail where id=:eid";
+$query = $dbh->prepare($sql);
+$query->bindParam(':avail',$avail,PDO::PARAM_STR);
+$query->bindParam(':eid',$eid,PDO::PARAM_STR);
+$query->execute();
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{   
+$msg="Leave applied successfully and Employee record updated Successfully";
+}}
+}
+else 
+{
+$error="Something went wrong. Please try again";
+}}}
+else{
 if($days>$avail)
 {
 $error=" No. of days should be lesser than or equal to available ";
@@ -73,7 +111,7 @@ else
 $error="Something went wrong. Please try again";
 }
 
-
+}
 
 }
 }
