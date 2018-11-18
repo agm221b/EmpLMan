@@ -8,21 +8,6 @@ header('location:index.php');
 }
 else{
 
-$eid=$_SESSION['mlogin'];
-$sql="Select d_no from tblemployees where FirstName=:eid";
-$query = $dbh -> prepare($sql);
-$query->bindParam(':eid',$eid,PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{   
-$dno=$result->d_no;
-//echo intval($dno);
-}}
-
 
  ?>
 <!DOCTYPE html>
@@ -98,6 +83,22 @@ $dno=$result->d_no;
                                  
                                     <tbody>
 <?php 
+
+$eid=$_SESSION['mlogin'];
+$sql="Select d_no from tblemployees where FirstName=:eid";
+$query = $dbh -> prepare($sql);
+$query->bindParam(':eid',$eid,PDO::PARAM_STR);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$cnt=1;
+if($query->rowCount() > 0)
+{
+foreach($results as $result)
+{   
+$dno=$result->d_no;
+//echo intval($dno);
+}}
+
 $eid=$_SESSION['mlogin'];
 $status=2;
 $sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblemployees.id,tblleaves.LeaveType,tblleaves.PostingDate,tblleaves.Status from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.Status=:status and tblemployees.FirstName!=:eid and tblemployees.d_no=:dno order by lid desc";
