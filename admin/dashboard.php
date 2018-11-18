@@ -136,7 +136,7 @@ $leavtypcount=$query->rowCount();
                                             <th width="120">Emp Name</th>
                                              <th width="120">Posting Date</th>	                                        
 						<th width="200">Description</th>
-                                            
+                                            <th width="200">Department</th>
 		<th width="120">Status</th>
                                         </tr>
                                     </thead>
@@ -144,7 +144,7 @@ $leavtypcount=$query->rowCount();
                                     <tbody>
 <?php 
 $eid=$_SESSION['alogin'];
-$sql =  "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblemployees.id,tblleaves.LeaveType,tblleaves.PostingDate,tblleaves.Description,tblleaves.AdminRemarkDate,tblleaves.AdminRemark,tblleaves.Status from tblleaves join tblemployees on tblleaves.empid=tblemployees.id order by lid desc";
+$sql =  "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblemployees.Department,tblemployees.id,tblleaves.LeaveType,tblleaves.PostingDate,tblleaves.Description,tblleaves.AdminRemarkDate,tblleaves.AdminRemark,tblleaves.Status from tblleaves join tblemployees on tblleaves.empid=tblemployees.id order by lid desc";
 $query = $dbh -> prepare($sql);
 $query->bindParam(':eid',$eid,PDO::PARAM_STR);
 $query->execute();
@@ -160,7 +160,7 @@ foreach($results as $result)
 		                            <td><?php echo htmlentities($result->FirstName." ".$result->LastName);?></td>
                                             <td><?php echo htmlentities($result->PostingDate);?></td>
 					   <td><?php echo htmlentities($result->Description);?></td>
-                                           
+                                           <td><?php echo htmlentities($result->Department);?></td>
                                                                                  <td><?php $stats=$result->Status;
 if($stats==1){
                                              ?>
