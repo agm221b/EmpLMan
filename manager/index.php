@@ -53,7 +53,7 @@ echo "<script type='text/javascript'> document.location = 'changepassword.php'; 
     </head>
     <body class="signin-page">
 	<video autoplay muted loop id="myVideo">
-	  <source src="../assets/images/backgroundvid.mp4" type="video/mp4">
+	  <source src="../assets/images/backvid2.mp4" type="video/mp4">
 	</video>
     
         <div class="mn-content valign-wrapper">
